@@ -8,6 +8,7 @@ import java.util.concurrent.locks.*;
  * @version 1.30 2004-08-01
  * @author Cay Horstmann
  */
+
 public class Bank
 {
    private final double[] accounts;
@@ -35,8 +36,17 @@ public class Bank
     */
    public synchronized void transfer(int from, int to, double amount) throws InterruptedException
    {
-         while (accounts[from] < amount)
-            wait();
+       try
+       {
+         if(accounts[from] < amount)
+         {
+             //wait();
+             throw new Exception("Insufficient balance");
+         }
+       }
+         catch (Exception ex) {
+                 System.out.println("Error: "+ex);
+                 }
          System.out.print(Thread.currentThread());
          accounts[from] -= amount;
          System.out.printf(" %10.2f from %d to %d", amount, from, to);
