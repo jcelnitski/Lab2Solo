@@ -55,6 +55,7 @@ public class Lab3Team3 {
                 connection.setRequestProperty("Content-Type", "application/json") ;
 //                connection.setRequestProperty("Authorization", "Bearer " + key);
                 connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("token", "ERhdavZTGDwvkVEyiLtadECjGJbRdRdR");
                 connection.setInstanceFollowRedirects(false);
                  
                 
