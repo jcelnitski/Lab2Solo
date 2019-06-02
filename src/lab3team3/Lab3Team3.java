@@ -18,7 +18,7 @@ import java.lang.Object.*;
 import org.json.simple.JSONArray;
 import org.json.simple.*;
 import com.google.gson.*;
-//import org.json.simple.JSONObject;
+import org.json.simple.JSONObject;
 
 
 
@@ -36,13 +36,7 @@ public class Lab3Team3 {
         
         BufferedReader bfr = new BufferedReader(new InputStreamReader(System.in)); 
         String key = "833921b016964f95905442e0fab0c229"; 
-//        JSONObject ezm; 
-//        System.out.println("test");
-//        while (n-- > 0)  
-//        { 
-//            String image = bfr.readLine(); 
-//            ezm = new JSONObject(); 
-//            ezm.put("url", image); 
+//        
             HttpURLConnection connection;
             URL url =  
                 new URL("https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories"); 
@@ -92,39 +86,3 @@ public class Lab3Team3 {
             }           
     }     
 }
-
-/*
-//Check out the following classes for how to make the Web connection
-HttpURLConnection
-URL
-//JSON Payload using a Banking example
-        BankingRecord bankRecord = new BankingRecord();
-        Gson gson = new Gson();
-        String jsonBank = gson.toJson(bankRecord);
- 
-//Example of a JSON Payload
-{"accountNumber":"1234","accountType":"Savings","transactionType":"Deposit","transactionAmount":"100","balance":"200"}
-//Example of response handling
-if (response == null) {
-System.err.println(BAD_API_RESPONSE);
-} else {
-System.out.println(String.format(RESPONSE_BODY, JsonUtils.prettyPrintResponse(response)));
-}
-//Code example of exception handling
-} catch (MalformedURLException ex) {
-  System.err.println(ERROR_MALFORMED_URL);
-  ex.printStackTrace();
-} catch (IOException ex) {
-  System.err.println(ERROR_API_CONNECTION_OR_DATA_RETRIEVAL);
-  ex.printStackTrace();
-} catch (IOException ex) {
-    ex.printStackTrace();
-} finally {
-// be sure to clean up; will close both the input stream and the socket
-disconnect the http object 
-http.disconnect();   
-if (apiConnection != null) {
-  apiConnection.disconnect();
-}
-
-*/
