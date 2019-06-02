@@ -15,6 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.stream.Collectors;
 import java.lang.Object.*;
+import org.json.simple.JSONArray;
+import org.json.simple.*;
+import com.google.gson.*;
 //import org.json.simple.JSONObject;
 
 
@@ -34,41 +37,32 @@ public class Lab3Team3 {
         BufferedReader bfr = new BufferedReader(new InputStreamReader(System.in)); 
         String key = "833921b016964f95905442e0fab0c229"; 
 //        JSONObject ezm; 
-        System.out.println("test");
+//        System.out.println("test");
 //        while (n-- > 0)  
 //        { 
 //            String image = bfr.readLine(); 
 //            ezm = new JSONObject(); 
 //            ezm.put("url", image); 
-            
+            HttpURLConnection connection;
+            URL url =  
+                new URL("https://www.ncdc.noaa.gov/cdo-web/api/v2/datacategories"); 
+                 connection = 
+                        (HttpURLConnection) url.openConnection(); 
             try 
             { 
                 
-                URL url =  
-             new URL("https://www.ncdc.noaa.gov/cdo-web/api/v2/"); 
-                HttpURLConnection connection = 
-                        (HttpURLConnection) url.openConnection(); 
-                
-                // set the request method and properties. 
                 connection.setRequestMethod("GET");
-//                connection.setRequestProperty("token:"+ key+" "+ url) ;
                 connection.setRequestProperty("Content-Type", "application/json") ;
-//                connection.setRequestProperty("Authorization", "Bearer " + key);
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("token", "ERhdavZTGDwvkVEyiLtadECjGJbRdRdR");
                 connection.setInstanceFollowRedirects(false);
                  
-                
                 HttpURLConnection.setFollowRedirects(true); 
-  
                 connection.setDoOutput(true); 
   
-//                OutputStream out = connection.getOutputStream(); 
-//                out.write(ezm.toString().getBytes()); 
                 InputStream ip = connection.getInputStream(); 
                 BufferedReader br =  
                         new BufferedReader(new InputStreamReader(ip)); 
-                System.out.println("conn");
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -76,25 +70,26 @@ public class Lab3Team3 {
                 }
                 String xx = sb.toString();
                 br.close();
-                
-                
-                System.out.println("testt");
-                System.out.println(xx);    
-                //AuthMsg msg = new Gson().fromJson(xx, AuthMsg.class);
-                //System.out.println(msg);
-                
-            } catch (Exception e)  
-              
+                JsonParser jsonParser = new JsonParser();
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                JsonParser jp = new JsonParser();
+                JsonElement je = jp.parse(xx);
+                String prettyJsonString = gson.toJson(je);
+                System.out.println(prettyJsonString);    
+            }
+                catch (MalformedURLException ex) {
+                    System.err.println("ERROR_MALFORMED_URL");
+                    ex.printStackTrace();
+            } 
+                catch (IOException e)  
             { 
                 System.out.println(e.getMessage());
                 e.printStackTrace();
-                System.out.println("error");
+                System.out.println("ERROR_API_CONNECTION_OR_DATA_RETRIEVAL");
             } 
-            
-//            catch (MalformedURLException e) {
-//        // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } 
+            finally {
+            connection.disconnect();
+            }           
     }     
 }
 
